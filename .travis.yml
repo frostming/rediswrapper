@@ -1,0 +1,17 @@
+language: python
+
+python:
+  - "2.7"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+
+sudo: false
+
+install:
+  - pip install coveralls pytest fakeredis redis
+
+script: coverage run --source redisdict pytest
+
+after_success:
+  - coveralls
