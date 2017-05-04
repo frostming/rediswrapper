@@ -9,9 +9,9 @@ python:
 sudo: false
 
 install:
-  - pip install coveralls pytest fakeredis redis
+  - pip install coveralls fakeredis redis
 
-script: coverage run --source redisdict pytest
+script: coverage run --source=rediswrapper setup.py test
 
 after_success:
-  - coveralls
+  coveralls

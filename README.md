@@ -1,25 +1,29 @@
-# Red-is-Dict
+# Redis Wrapper
 > A Pythonic Wrapper of Redis Client
 
-RedisDict is a pythonic wrapper of Redis Client for end users. The whole storage
+[![PyPI](https://img.shields.io/pypi/pyversions/rediswrapper.svg)](https://pypi.python.org/pypi/rediswrapper)
+[![Build Status](https://travis-ci.org/frostming/RedisDict.svg?branch=master)](https://travis-ci.org/frostming/RedisDict)
+[![Coverage Status](https://coveralls.io/repos/github/frostming/rediswrapper/badge.svg?branch=master)](https://coveralls.io/github/frostming/rediswrapper?branch=master)
+
+rediswrapper is a pythonic wrapper of Redis Client for end users. The whole storage
  acts like a python dict as well as its child storage values.
 
 ## Installation
 **From PyPI:**
 ```bash
-pip install redisdict
+pip install rediswrapper
 ```
 **From GitHub**
 ```bash
-git clone https://github.com/frostming/redisdict
-cd redisdict
+git clone https://github.com/frostming/rediswrapper
+cd rediswrapper
 python setup.py install
 ```
 
 ## Usage
 ```python
->>> import redisdict
->>> redis = redisdict.RedisDict()
+>>> import rediswrapper
+>>> redis = rediswrapper.RedisDict()
 # String value
 >>> redis['a'] = 'hello'
 # int value

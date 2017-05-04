@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Tests for RedisDict"""
-from redisdict import RedisDict
+from rediswrapper import RedisDict
 from fakeredis import FakeStrictRedis
 import unittest
 import datetime
