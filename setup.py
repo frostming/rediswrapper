@@ -8,15 +8,15 @@ if sys.argv[-1] == 'publish':
     os.system("python setup.py sdist upload")
     sys.exit()
 
-if sys.argv[-1] == 'test':
-    try:
-        __import__('pytest')
-    except ImportError:
-        print('pytest required.')
-        sys.exit(1)
-
-    errors = os.system('pytest')
-    sys.exit(bool(errors))
+# if sys.argv[-1] == 'test':
+#     try:
+#         __import__('py')
+#     except ImportError:
+#         print('pytest required.')
+#         sys.exit(1)
+#
+#     errors = os.system('py.test')
+#     sys.exit(bool(errors))
 
 
 def get_version():
@@ -42,6 +42,7 @@ setup(name='rediswrapper',
       author_email='mianghong@gmail.com',
       license='MIT',
       packages=['rediswrapper'],
+      test_suite='test_rediswrapper',
       zip_safe=False,
       long_description=long_description,
       keywords='redis client mock',

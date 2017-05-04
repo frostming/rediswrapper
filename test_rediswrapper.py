@@ -237,3 +237,7 @@ class RedisDictTestCase(unittest.TestCase):
         assert redis['h'] & set(['a']) == set(['a'])
         assert redis['h'] | set(['a', 'e']) \
             == set(['a', 'b', 'c', 'e'])
+
+
+if __name__ == '__main__':
+    unittest.main()
