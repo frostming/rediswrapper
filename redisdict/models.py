@@ -92,7 +92,7 @@ class ListType(RedisType, MutableSequence):
                 raise IndexError('Index out of range')
             self._r.lset(self.key, index, from_value(value))
         else:
-            raise TypeError('list indices must be integers, not %r' 
+            raise TypeError('list indices must be integers, not %r'
                             % type(index))
 
     def __getitem__(self, index):
@@ -182,6 +182,9 @@ class SetType(RedisType, MutableSet):
             self.discard(v)
         for v in other:
             self.add(v)
+
+    def _from_iterable(self, other):
+        return set(other)
 
 
 type_map = {'list': ListType, 'hash': HashType, 'set': SetType}

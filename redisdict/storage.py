@@ -8,7 +8,7 @@ from collections import MutableMapping
 
 
 class RedisDict(MutableMapping):
-    """ The mocker class of redis-py client, support dict-like APIs and 
+    """ The mocker class of redis-py client, support dict-like APIs and
     attribute assignments.
 
     The construction arguments are the same as redis-py, except for ``client``
@@ -20,7 +20,7 @@ class RedisDict(MutableMapping):
         client_cls = kwargs.pop('client', redis.StrictRedis)
         self.prefix = kwargs.pop('prefix', 'root') + '.'
         self._r = client_cls(host, port, db, *args, **kwargs)
-        
+
     def __getitem__(self, key):
         rkey = self.prefix + key
         if not self._r.exists(rkey):

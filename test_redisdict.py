@@ -174,3 +174,66 @@ class RedisDictTestCase(unittest.TestCase):
         assert data.pop() == 'a'
         assert data.pop(0) == 0
         assert len(data) == 4
+
+    def test_hash_contains(self):
+        assert 'a' in redis['g']
+        assert 2 not in redis['g']
+
+    def test_hash_get_item(self):
+        assert redis['g']['b'] == 1
+        assert redis['g'].get('c') == 2
+        with pytest.raises(KeyError):
+            redis['g'][5]
+
+    def test_hash_set_item(self):
+        redis['g'][1] = True
+        assert redis['g'][1] is True
+        redis['g']['c'] = 'c'
+        assert redis['g']['c'] == 'c'
+
+    def test_hash_del_item(self):
+        del redis['g']['d']
+        assert 'd' not in redis['g']
+        with pytest.raises(KeyError):
+            del redis['g'][5]
+
+    def test_hash_representation(self):
+        assert redis['g'] == {'a': 0,
+                              'b': 1,
+                              'c': 2,
+                              'd': 3}
+
+    def test_hash_keys(self):
+        assert cmp_no_order(redis['g'].keys(), list('abcd'))
+
+    def test_hash_get_attr(self):
+        assert callable(redis['g'].get)
+        assert redis['g'].c == 2
+        with pytest.raises(AttributeError):
+            redis['g'].other
+
+    def test_set_contains(self):
+        assert 'a' in redis['h']
+        assert 5 not in redis['h']
+
+    def test_set_representation(self):
+        assert set(redis['h']) == set(['a', 'b', 'c'])
+
+    def test_set_add(self):
+        redis['h'].add('a')
+        assert len(redis['h']) == 3
+        redis['h'].add('d')
+        assert 'd' in redis['h']
+
+    def test_set_discard(self):
+        redis['h'].discard('d')
+        assert len(redis['h']) == 3
+        redis['h'].discard('b')
+        assert len(redis['h']) == 2
+
+    def test_set_op(self):
+        assert redis['h'] == set(['a', 'b', 'c'])
+        assert redis['h'] < set(['a', 'b', 'c', 'd', 'e'])
+        assert redis['h'] & set(['a']) == set(['a'])
+        assert redis['h'] | set(['a', 'e']) \
+            == set(['a', 'b', 'c', 'e'])
