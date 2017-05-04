@@ -10,9 +10,9 @@ except ImportError:
     import pickle
 
 try:
-    basestring = basestring
+    basestring
 except NameError:
-    basestring = str
+    basestring = (str, bytes)
 
 
 class RedisType:
@@ -41,6 +41,8 @@ class HashType(RedisType, MutableMapping):
 
     def __iter__(self):
         for key in self._r.hkeys(self.key):
+            if isinstance(key, bytes):
+                key = key.decode('utf8')
             yield key
 
     def __len__(self):
@@ -69,7 +71,7 @@ class ListType(RedisType, MutableSequence):
             indices = index.indices(len(self))
             for i in range(*indices):
                 try:
-                    self[i] = gen.next()
+                    self[i] = next(gen)
                 except StopIteration:
                     # The value length is smaller than slice
                     if indices[2] != 1:
@@ -206,4 +208,4 @@ def to_value(pickled):
     try:
         return pickle.loads(pickled)
     except:
-        return pickled
+        return pickled.decode('utf8')

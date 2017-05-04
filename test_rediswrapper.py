@@ -14,7 +14,7 @@ golden = {'a': 'hello',
           'c': 1,
           'd': None,
           'e': now,
-          'f': range(5),
+          'f': list(range(5)),
           'g': dict(zip('abcd', range(4))),
           'h': set(['a', 'b', 'c'])}
 
@@ -85,9 +85,11 @@ class RedisDictTestCase(unittest.TestCase):
             del redis['z']
 
     def test_get_attribute(self):
-        assert redis.f == range(5)
+        assert redis.f == list(range(5))
         redis['get'] = 1
         assert callable(redis.get)
+        with pytest.raises(AttributeError):
+            redis.other
 
     def test_list_get_item(self):
         data = redis['f']
@@ -190,6 +192,8 @@ class RedisDictTestCase(unittest.TestCase):
         assert redis['g'][1] is True
         redis['g']['c'] = 'c'
         assert redis['g']['c'] == 'c'
+        redis['g']['other'] = [1, 2]
+        assert redis['g']['other'] == [1, 2]
 
     def test_hash_del_item(self):
         del redis['g']['d']

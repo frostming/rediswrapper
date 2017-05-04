@@ -25,10 +25,13 @@ class RedisDict(MutableMapping):
         rkey = self.prefix + key
         if not self._r.exists(rkey):
             raise KeyError(key)
-        if self._r.type(rkey) == 'string':
+        typ = self._r.type(rkey)
+        if isinstance(typ, bytes):
+            typ = typ.decode('utf8')
+        if typ == 'string':
             return to_value(self._r.get(rkey))
         else:
-            return self._wrap_type(rkey, self._r.type(rkey))
+            return self._wrap_type(rkey, typ)
 
     def __contains__(self, key):
         return self._r.exists(self.prefix + key)
@@ -59,10 +62,14 @@ class RedisDict(MutableMapping):
         self._r.delete(rkey)
 
     def _wrap_type(self, key, type):
+        if isinstance(type, bytes):
+            type = type.decode('utf8')
         return type_map[type](key, self._r)
 
     def __iter__(self):
         for key in self._r.keys():
+            if isinstance(key, bytes):
+                key = key.decode('utf8')
             if key.startswith(self.prefix):
                 yield key[len(self.prefix):]
 
