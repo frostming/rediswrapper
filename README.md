@@ -2,7 +2,7 @@
 > A Pythonic Wrapper of Redis Client
 
 [![PyPI](https://img.shields.io/pypi/pyversions/rediswrapper.svg)](https://pypi.python.org/pypi/rediswrapper)
-[![Build Status](https://travis-ci.org/frostming/RedisDict.svg?branch=master)](https://travis-ci.org/frostming/RedisDict)
+[![Build Status](https://travis-ci.org/frostming/rediswrapper.svg?branch=master)](https://travis-ci.org/frostming/rediswrapper)
 [![Coverage Status](https://coveralls.io/repos/github/frostming/rediswrapper/badge.svg?branch=master)](https://coveralls.io/github/frostming/rediswrapper?branch=master)
 
 rediswrapper is a pythonic wrapper of Redis Client for end users. The whole storage
@@ -48,7 +48,7 @@ ListType value([0, 1, 2, 3, 4, 0])
 >>> redis['f']
 SetType value([1, 2, 3])
 ```
-RedisDict will try to serialize non-sting values and store them in redis and
+rediswrapper will try to serialize non-sting values and store them in redis and
 unserialize them when fetching back.
 
 All redis value types are mocked with respective python objects and support all

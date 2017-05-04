@@ -20,9 +20,6 @@ class RedisType:
         self._r = client
         self.key = key
 
-    def _set(self, other):
-        raise NotImplementedError
-
 
 class HashType(RedisType, MutableMapping):
     """Dict-like wrapper for list data"""

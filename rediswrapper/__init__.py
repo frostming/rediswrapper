@@ -1,6 +1,7 @@
 """
-Red-is-Dict
------------
+rediswrapper
+------------
+A pythonic wrapper for redis client.
 
 Author: Frost Ming<mianghong@gmail.com>
 """

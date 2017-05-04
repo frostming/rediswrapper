@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Tests for RedisDict"""
+"""Tests for rediswrapper"""
 from rediswrapper import RedisDict
 from fakeredis import FakeStrictRedis
 import unittest
