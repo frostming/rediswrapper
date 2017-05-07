@@ -8,15 +8,15 @@ if sys.argv[-1] == 'publish':
     os.system("python setup.py sdist upload")
     sys.exit()
 
-# if sys.argv[-1] == 'test':
-#     try:
-#         __import__('py')
-#     except ImportError:
-#         print('pytest required.')
-#         sys.exit(1)
-#
-#     errors = os.system('py.test')
-#     sys.exit(bool(errors))
+if sys.argv[-1] == 'test':
+    try:
+        __import__('py')
+    except ImportError:
+        print('pytest required.')
+        sys.exit(1)
+
+    errors = os.system('py.test')
+    sys.exit(bool(errors))
 
 
 def get_version():
@@ -46,6 +46,7 @@ setup(name='rediswrapper',
       zip_safe=False,
       long_description=long_description,
       keywords='redis client mock',
+      test_requires=['pytest', 'fakeredis'],
       install_requires=['redis'],
       classifiers=[
           "Intended Audience :: Developers",
@@ -55,6 +56,9 @@ setup(name='rediswrapper',
           "Programming Language :: Python :: 3.3",
           "Programming Language :: Python :: 3.4",
           "Programming Language :: Python :: 3.5",
+          "Programming Language :: Python :: 3.6",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
           "Development Status :: 3 - Alpha",
           "License :: OSI Approved :: MIT License"
       ],
