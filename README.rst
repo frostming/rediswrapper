@@ -9,8 +9,8 @@ Redis Wrapper
 .. image:: https://coveralls.io/repos/github/frostming/rediswrapper/badge.svg?branch=master
   :target: https://coveralls.io/github/frostming/rediswrapper?branch=master
 
-rediswrapper is a pythonic wrapper of Redis Client for end users. The whole storage
- acts like a python dict as well as its child storage values.
+*rediswrapper is a pythonic wrapper of Redis Client for end users. The whole storage
+acts like a python dict as well as its child storage values.*
 
 Features
 --------
