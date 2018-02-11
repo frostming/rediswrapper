@@ -39,7 +39,7 @@ deserialize them when fetching back.
 
 All redis value types are mocked with respective python objects and support all
 standard methods as the builtin types.
-::
+.. code:: python
 
   >>> import rediswrapper
   >>> redis = rediswrapper.RedisDict()
@@ -69,7 +69,7 @@ standard methods as the builtin types.
 
 To inspect those value types, one should use the ABCs defined in ``collections``
 module.
-::
+.. code:: python
 
   >>> from collections import Mapping
   >>> isinstance(redis['e'], Mapping)
