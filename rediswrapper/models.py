@@ -191,18 +191,11 @@ type_map = {'list': ListType, 'hash': HashType, 'set': SetType}
 
 def from_value(value):
     """Convert a value to be stored in redis"""
-    if isinstance(value, basestring):
-        # Keep most readability, do not pickle string values
-        return value
-    try:
-        return pickle.dumps(value)
-    except Exception:
-        return value
+    return pickle.dumps(value)
+   
 
 
 def to_value(pickled):
     """Convert a storage value from redis to human readable"""
-    try:
-        return pickle.loads(pickled)
-    except:
-        return pickled.decode('utf8')
+    return pickle.loads(pickled)
+
