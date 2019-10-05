@@ -76,3 +76,14 @@ module.
   >>> from collections import Mapping
   >>> isinstance(redis['e'], Mapping)
   True
+
+History
+-------
+
+v0.3.0
+    * Drop support for Python 3.3
+    * Fix a vulnerability issue that cause users run arbitrary scripts.
+
+Licensing
+---------
+This work is open-sourced under the `MIT <LICENSE>`_ license.
