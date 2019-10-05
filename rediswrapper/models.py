@@ -4,6 +4,7 @@ Python wrapper of redis datatypes
 from collections import MutableSet
 from collections import MutableMapping
 from collections import MutableSequence
+
 try:
     import cPickle as pickle
 except ImportError:
@@ -23,6 +24,7 @@ class RedisType:
 
 class HashType(RedisType, MutableMapping):
     """Dict-like wrapper for list data"""
+
     def __getitem__(self, key):
         if not self._r.hexists(self.key, key):
             raise KeyError(key)
@@ -39,7 +41,7 @@ class HashType(RedisType, MutableMapping):
     def __iter__(self):
         for key in self._r.hkeys(self.key):
             if isinstance(key, bytes):
-                key = key.decode('utf8')
+                key = key.decode("utf8")
             yield key
 
     def __len__(self):
@@ -52,7 +54,7 @@ class HashType(RedisType, MutableMapping):
             raise AttributeError(name)
 
     def __repr__(self):
-        return '%s value(%s)' % (self.__class__.__name__, dict(self))
+        return "%s value(%s)" % (self.__class__.__name__, dict(self))
 
     def _set(self, other):
         for key in self:
@@ -62,6 +64,7 @@ class HashType(RedisType, MutableMapping):
 
 class ListType(RedisType, MutableSequence):
     """List-like wrapper for list data"""
+
     def __setitem__(self, index, value):
         if isinstance(index, slice):
             gen = iter(value)
@@ -74,7 +77,7 @@ class ListType(RedisType, MutableSequence):
                     if indices[2] != 1:
                         raise ValueError("The value length doesn't match")
                     else:
-                        del self[i:indices[1]]
+                        del self[i : indices[1]]
                         break
             else:
                 # The value length is larger than slice
@@ -88,11 +91,10 @@ class ListType(RedisType, MutableSequence):
         elif isinstance(index, int):
             index = index + len(self) if index < 0 else index
             if index >= len(self):
-                raise IndexError('Index out of range')
+                raise IndexError("Index out of range")
             self._r.lset(self.key, index, from_value(value))
         else:
-            raise TypeError('list indices must be integers, not %r'
-                            % type(index))
+            raise TypeError("list indices must be integers, not %r" % type(index))
 
     def __getitem__(self, index):
         if isinstance(index, slice):
@@ -101,9 +103,9 @@ class ListType(RedisType, MutableSequence):
         elif isinstance(index, int):
             index = index + len(self) if index < 0 else index
             if index >= len(self):
-                raise IndexError('Index out of range')
+                raise IndexError("Index out of range")
             return to_value(self._r.lindex(self.key, index))
-        raise TypeError('list indices must be integers, not %r' % type(index))
+        raise TypeError("list indices must be integers, not %r" % type(index))
 
     def __delitem__(self, index):
         if isinstance(index, slice):
@@ -114,18 +116,17 @@ class ListType(RedisType, MutableSequence):
         elif isinstance(index, int):
             index = index + len(self) if index < 0 else index
             if index >= len(self):
-                raise IndexError('Index out of range')
+                raise IndexError("Index out of range")
             if index == 0:
                 return self._r.lpop(self.key)
             elif index == len(self) - 1:
                 return self._r.rpop(self.key)
-            temp = self._r.lrange(self.key, index+1, len(self))
-            self._r.ltrim(self.key, 0, index-1)
+            temp = self._r.lrange(self.key, index + 1, len(self))
+            self._r.ltrim(self.key, 0, index - 1)
             for item in temp:
                 self._r.rpush(self.key, item)
         else:
-            raise TypeError('list indices must be integers, not %r'
-                            % type(index))
+            raise TypeError("list indices must be integers, not %r" % type(index))
 
     def __len__(self):
         return self._r.llen(self.key)
@@ -136,7 +137,7 @@ class ListType(RedisType, MutableSequence):
         return list(self) == list(other)
 
     def __repr__(self):
-        return '%s value(%s)' % (self.__class__.__name__, list(self))
+        return "%s value(%s)" % (self.__class__.__name__, list(self))
 
     def insert(self, index, value):
         index = index + len(self) if index < 0 else index
@@ -144,7 +145,7 @@ class ListType(RedisType, MutableSequence):
             if index == 0:
                 return self._r.lpush(self.key, from_value(value))
             temp = self._r.lrange(self.key, index, len(self))
-            self._r.ltrim(self.key, 0, index-1)
+            self._r.ltrim(self.key, 0, index - 1)
             self.append(value)
             for item in temp:
                 self._r.rpush(self.key, item)
@@ -157,6 +158,7 @@ class ListType(RedisType, MutableSequence):
 
 class SetType(RedisType, MutableSet):
     """Set-like wrapper for list data"""
+
     def __contains__(self, value):
         return self._r.sismember(self.key, from_value(value))
 
@@ -174,7 +176,7 @@ class SetType(RedisType, MutableSet):
         self._r.srem(self.key, from_value(value))
 
     def __repr__(self):
-        return '%s value(%s)' % (self.__class__.__name__, list(self))
+        return "%s value(%s)" % (self.__class__.__name__, list(self))
 
     def _set(self, other):
         for v in self:
@@ -186,23 +188,14 @@ class SetType(RedisType, MutableSet):
         return set(other)
 
 
-type_map = {'list': ListType, 'hash': HashType, 'set': SetType}
+type_map = {"list": ListType, "hash": HashType, "set": SetType}
 
 
 def from_value(value):
     """Convert a value to be stored in redis"""
-    if isinstance(value, basestring):
-        # Keep most readability, do not pickle string values
-        return value
-    try:
-        return pickle.dumps(value)
-    except Exception:
-        return value
+    return pickle.dumps(value)
 
 
 def to_value(pickled):
     """Convert a storage value from redis to human readable"""
-    try:
-        return pickle.loads(pickled)
-    except:
-        return pickled.decode('utf8')
+    return pickle.loads(pickled)
