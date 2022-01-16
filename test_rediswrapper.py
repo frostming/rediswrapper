@@ -6,7 +6,14 @@ from fakeredis import FakeStrictRedis
 import unittest
 import datetime
 import pytest
-from collections import Set, MutableSequence
+
+from rediswrapper.pyversion import PY_MORE_330
+
+if PY_MORE_330:
+    from collections.abc import Set, MutableSequence
+else:
+    from collections import Set, MutableSequence
+
 
 now = datetime.datetime.now()
 golden = {

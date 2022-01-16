@@ -1,9 +1,16 @@
 """
 Python wrapper of redis datatypes
 """
-from collections import MutableSet
-from collections import MutableMapping
-from collections import MutableSequence
+from rediswrapper.pyversion import PY_MORE_330
+
+if PY_MORE_330:
+    from collections.abc import MutableSet
+    from collections.abc import MutableMapping
+    from collections.abc import MutableSequence
+else:
+    from collections import MutableSet
+    from collections import MutableMapping
+    from collections import MutableSequence
 
 try:
     import cPickle as pickle
