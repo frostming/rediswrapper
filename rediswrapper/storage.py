@@ -4,7 +4,12 @@ Mocker class of redis-py client
 import redis
 from .models import type_map
 from .models import from_value, to_value
-from collections import MutableMapping
+from .pyversion import PY_MORE_330
+
+if PY_MORE_330:
+    from collections.abc import MutableMapping
+else:
+    from collections.abc import MutableMapping
 
 
 class RedisDict(MutableMapping):
