@@ -9,7 +9,7 @@ from .pyversion import PY_MORE_330
 if PY_MORE_330:
     from collections.abc import MutableMapping
 else:
-    from collections.abc import MutableMapping
+    from collections import MutableMapping
 
 
 class RedisDict(MutableMapping):
