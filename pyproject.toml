@@ -1,0 +1,46 @@
+[project]
+name = "rediswrapper"
+description = "Pythonic wrapper for Redis Client."
+keywords = ["redis", "client", "mock"]
+readme = "README.rst"
+authors = [
+    {name = "Frost Ming", email = "mianghong@gmail.com"},
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Software Development",
+]
+dependencies = [
+    "redis",
+]
+license = {text = "MIT"}
+requires-python = ">=3.10"
+dynamic = ["version"]
+
+[tool.pdm.version]
+source = "file"
+path = "rediswrapper/__init__.py"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest>=7.2.0",
+    "fakeredis>=2.4.0",
+]
+[project.urls]
+Homepage = "https://github.com/frostming/rediswrapper"
+
+[build-system]
+requires = ["pdm-pep517>=1.0.0"]
+build-backend = "pdm.pep517.api"

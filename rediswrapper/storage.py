@@ -4,16 +4,12 @@ Mocker class of redis-py client
 import redis
 from .models import type_map
 from .models import from_value, to_value
-from .pyversion import PY_MORE_330
 
-if PY_MORE_330:
-    from collections.abc import MutableMapping
-else:
-    from collections import MutableMapping
+from collections.abc import MutableMapping
 
 
 class RedisDict(MutableMapping):
-    """ The mocker class of redis-py client, support dict-like APIs and
+    """The mocker class of redis-py client, support dict-like APIs and
     attribute assignments.
 
     The construction arguments are the same as redis-py, except for ``client``
@@ -21,9 +17,10 @@ class RedisDict(MutableMapping):
 
     The class also subclasses dict to enable subclass or isinstance check.
     """
-    def __init__(self, host='localhost', port=6379, db=0, *args, **kwargs):
-        client_cls = kwargs.pop('client', redis.StrictRedis)
-        self.prefix = kwargs.pop('prefix', 'root') + '.'
+
+    def __init__(self, host="localhost", port=6379, db=0, *args, **kwargs):
+        client_cls = kwargs.pop("client", redis.StrictRedis)
+        self.prefix = kwargs.pop("prefix", "root") + "."
         self._r = client_cls(host, port, db, *args, **kwargs)
 
     def __getitem__(self, key):
@@ -32,8 +29,8 @@ class RedisDict(MutableMapping):
             raise KeyError(key)
         typ = self._r.type(rkey)
         if isinstance(typ, bytes):
-            typ = typ.decode('utf8')
-        if typ == 'string':
+            typ = typ.decode("utf8")
+        if typ == "string":
             return to_value(self._r.get(rkey))
         else:
             return self._wrap_type(rkey, typ)
@@ -48,13 +45,13 @@ class RedisDict(MutableMapping):
             pass
         rkey = self.prefix + key
         if isinstance(value, list):
-            rv = self._wrap_type(rkey, 'list')
+            rv = self._wrap_type(rkey, "list")
             rv._set(value)
         elif isinstance(value, dict):
-            rv = self._wrap_type(rkey, 'hash')
+            rv = self._wrap_type(rkey, "hash")
             rv._set(value)
         elif isinstance(value, set):
-            rv = self._wrap_type(rkey, 'set')
+            rv = self._wrap_type(rkey, "set")
             rv._set(value)
         else:
             rv = from_value(value)
@@ -68,15 +65,15 @@ class RedisDict(MutableMapping):
 
     def _wrap_type(self, key, type):
         if isinstance(type, bytes):
-            type = type.decode('utf8')
+            type = type.decode("utf8")
         return type_map[type](key, self._r)
 
     def __iter__(self):
         for key in self._r.keys():
             if isinstance(key, bytes):
-                key = key.decode('utf8')
+                key = key.decode("utf8")
             if key.startswith(self.prefix):
-                yield key[len(self.prefix):]
+                yield key[len(self.prefix) :]
 
     def __len__(self):
         return len(self._r.keys())

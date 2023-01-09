@@ -1,19 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Tests for rediswrapper"""
-from rediswrapper import RedisDict
-from fakeredis import FakeStrictRedis
-import unittest
 import datetime
+import unittest
+from collections.abc import MutableSequence, Set
+
 import pytest
+from fakeredis import FakeStrictRedis
 
-from rediswrapper.pyversion import PY_MORE_330
-
-if PY_MORE_330:
-    from collections.abc import Set, MutableSequence
-else:
-    from collections import Set, MutableSequence
-
+from rediswrapper import RedisDict
 
 now = datetime.datetime.now()
 golden = {

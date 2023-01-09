@@ -80,6 +80,9 @@ module.
 History
 -------
 
+v0.4.0
+    * Drop support for Python older than 3.6
+
 v0.3.0
     * Drop support for Python 3.3
     * Fix a vulnerability issue that cause users run arbitrary scripts.
