@@ -1,13 +1,11 @@
 Redis Wrapper
 =============
 .. image:: https://img.shields.io/pypi/v/rediswrapper.svg
-  :target: https://pypi.python.org/pypi/rediswrapper
+  :target: https://pypi.org/project/rediswrapper
 .. image:: https://img.shields.io/pypi/pyversions/rediswrapper.svg
-  :target: https://pypi.python.org/pypi/rediswrapper
-.. image:: https://travis-ci.org/frostming/rediswrapper.svg?branch=master
-  :target: https://travis-ci.org/frostming/rediswrapper
-.. image:: https://coveralls.io/repos/github/frostming/rediswrapper/badge.svg?branch=master
-  :target: https://coveralls.io/github/frostming/rediswrapper?branch=master
+  :target: https://pypi.org/project/rediswrapper
+.. image:: https://github.com/frostming/rediswrapper/actions/workflows/ci.yml/badge.svg
+  :target: https://github.com/frostming/rediswrapper/actions/workflows/ci.yml
 
 *rediswrapper is a pythonic wrapper of Redis Client for end users. The whole storage
 acts like a python dict as well as its child storage values.*
@@ -28,7 +26,7 @@ From GitHub::
 
   git clone https://github.com/frostming/rediswrapper
   cd rediswrapper
-  python setup.py install
+  pip install .
 
 
 Usage
