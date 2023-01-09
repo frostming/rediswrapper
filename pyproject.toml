@@ -35,8 +35,8 @@ path = "rediswrapper/__init__.py"
 
 [tool.pdm.dev-dependencies]
 dev = [
-    "pytest>=7.2.0",
-    "fakeredis>=2.4.0",
+    "pytest",
+    "fakeredis",
 ]
 [project.urls]
 Homepage = "https://github.com/frostming/rediswrapper"
